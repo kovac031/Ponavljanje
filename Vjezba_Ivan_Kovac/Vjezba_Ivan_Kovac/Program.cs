@@ -2,6 +2,7 @@
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
@@ -187,11 +188,51 @@ namespace Vjezba_Ivan_Kovac
                     goto izbornik;
 ////////////////////////////////////////////////////////////////////////////////////
                 case "7":
+                    Console.WriteLine("\nUnesi 4 osobe, njihovo ime/prezime/datum rođenja/spol:");
 
+                    List<Osoba> osobe = new List<Osoba>();
 
+                    for (i = 1; i < 5; i++)
+                    {
+                        Console.WriteLine($"\nUnesi ime {i}. osobe:");
+                        string ime = Console.ReadLine();
+                        Console.WriteLine($"\nUnesi prezime {i}. osobe:");
+                        string prezime = Console.ReadLine();
+                        Console.WriteLine($"\nUnesi DOB {i}. osobe u formatu dd.MM.yyyy:");
+                        string datumStr = Console.ReadLine();
+                        Console.WriteLine($"\nUnesi spol {i}. osobe (M/F):");
+                        string spol = Console.ReadLine();
 
+                        if (DateTime.TryParseExact(datumStr, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime datumDob))
+                        {
+                            Osoba osoba = new Osoba
+                            {
+                                FirstName = ime,
+                                LastName = prezime,
+                                DOB = datumDob,
+                                Gender = spol
+                            };
+                            osobe.Add(osoba);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Neispravan format datuma. Unesite datum u formatu dd.MM.yyyy.");
+                        }
+                    }
+                    Osoba oldest = osobe.OrderBy(osoba => osoba.DOB).FirstOrDefault();
+                    Console.WriteLine($"\nNajstarija osoba je {oldest.FirstName} {oldest.LastName}.");
 
+                    Osoba youngest = osobe.OrderByDescending(osoba => osoba.DOB).FirstOrDefault();
+                    Console.WriteLine($"\nNajmlađa osoba je {youngest.FirstName} {youngest.LastName}.");
 
+                    int brM = osobe.Count(osoba => osoba.Gender == "M");
+                    int brF = osobe.Count(osoba => osoba.Gender == "F");
+                    Console.WriteLine($"\nUneseno je {brM} muške i {brF} ženske osobe");
+
+                    int pre2000 = osobe.Count(osoba => osoba.DOB.Year < 2000);
+                    Console.WriteLine($"\nUneseno je {pre2000} osobe rođenih prije 2000.");
+
+                    goto izbornik;
 ///////////////////////////////////////////////////////////////////////////////////
                 case "8":
                     PdfDocument document = new PdfDocument();
