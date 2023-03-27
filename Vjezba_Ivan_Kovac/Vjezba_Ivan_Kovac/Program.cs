@@ -31,7 +31,7 @@ namespace Vjezba_Ivan_Kovac
                     string result = (broj % 2 == 0) ? $"Broj {broj} je paran!\n" : $"Broj {broj} je neparan!\n";
                     Console.WriteLine(result);
                     goto izbornik;
-
+///////////////////////////////////////////////////////////////////////////////////////////////
                 case "2":
                     Console.WriteLine("Unesi tri broja a, b, c kao parametre kvadratne jednadzbe:\n");
                     
@@ -74,7 +74,7 @@ namespace Vjezba_Ivan_Kovac
                         }
                     }
                     goto izbornik;
-
+//////////////////////////////////////////////////////////////////////////////////////////////
                 case "3":
                     Console.WriteLine("Unosite ocjene jednu po jednu za izračun prosjeka. Unosom nule se završi unos.\n");
                     List<int> unosOcjena = new List<int>();
@@ -100,6 +100,25 @@ namespace Vjezba_Ivan_Kovac
                     string decimala = String.Format("{0:0.00}", prosjek);
                     Console.WriteLine($"Prosjek unesenih ocjena je {decimala}\n");
                     goto izbornik;
+/////////////////////////////////////////////////////////////////////////////////////////
+                case "4":
+                    Console.WriteLine("Prvo unesi n za n broj znamenki od kojih ću pozbrajti samo njihove zadnje znamenke:\n");
+                    string nStr = Console.ReadLine();
+                    int nInt = Int32.Parse(nStr);
+                    int zbroj = 0;
+                    i = 0;
+                    while(i < nInt)
+                    {
+                        Console.WriteLine($"\nUnesi {i+1}. broj:");
+                        string brojStr = Console.ReadLine();
+                        string lastStr = brojStr.Substring(brojStr.Length - 1,1);
+                        int lastInt = Int32.Parse(lastStr);
+                        zbroj = zbroj + lastInt;
+                        i++;
+                    }
+                    Console.WriteLine($"Zbroj svih zadnjih znamenki je: {zbroj}!\n");
+                    goto izbornik;
+/////////////////////////////////////////////////////////////////////////////////////////
 
                 default: Console.WriteLine("Nije unesen dobar broj:\n");
                     goto izbornik;
