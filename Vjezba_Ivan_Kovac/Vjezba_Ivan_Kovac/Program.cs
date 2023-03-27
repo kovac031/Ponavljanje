@@ -53,11 +53,33 @@ namespace Vjezba_Ivan_Kovac
                     goto izbornik;
 
                 case "3":
+                    Console.WriteLine("Unosite ocjene jednu po jednu za izračun prosjeka. Unosom nule se završi unos.\n");
+                    List<int> unosOcjena = new List<int>();
 
+                    string ocjenaStr = Console.ReadLine();
+                    int ocjenaInt = Int32.Parse(ocjenaStr);
+                    do
+                    {
+                        if (ocjenaInt != 0 && ocjenaInt <= 5 && ocjenaInt % 1 == 0)
+                        {
+                            unosOcjena.Add(ocjenaInt);
+                        }
+                        else
+                        {
+                            Console.WriteLine("To nije ocjena. Probaj drugi broj:\n");
+                        }
+                    }
+                    while (ocjenaStr != "0");
+                    double prosjek = unosOcjena.Average();
+                    Console.WriteLine($"Procjek unesenih ocjena je {prosjek}\n");
+                    goto izbornik;
 
                 default: Console.WriteLine("Nije unesen dobar broj:\n");
+                    break;
+            }
 
-            }break;
+
+            Console.ReadLine();
         }
     }
 }
