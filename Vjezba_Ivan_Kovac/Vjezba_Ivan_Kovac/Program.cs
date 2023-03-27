@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,10 +12,11 @@ namespace Vjezba_Ivan_Kovac
 {
     internal class Program
     {
+        static List<int> lotoList = new List<int>();
         static void Loto() 
         {
             Random random = new Random();
-            List<int> lotoList = new List<int>();
+            
             int i = 0;
             while (i<7)
             {
@@ -24,10 +27,6 @@ namespace Vjezba_Ivan_Kovac
                     lotoList.Add(loto);
                     i++;
                 }
-            }
-            foreach (int loto in lotoList)
-            {
-                Console.WriteLine(loto);
             }
         }
         static void Main(string[] args)
@@ -135,6 +134,11 @@ namespace Vjezba_Ivan_Kovac
 
                     Loto();
 
+                    foreach (int loto in lotoList)
+                    {
+                        Console.WriteLine(loto);
+                    }
+
                     goto izbornik;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,6 +185,42 @@ namespace Vjezba_Ivan_Kovac
                         Console.WriteLine (ex);
                     }
                     goto izbornik;
+////////////////////////////////////////////////////////////////////////////////////
+                case "7":
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+                case "8":
+                    PdfDocument document = new PdfDocument();
+                    PdfPage page = document.AddPage();
+
+                    XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                    XFont font = new XFont("Comic Sans", 30, XFontStyle.Bold);
+
+                    Loto();
+
+                    int x = 10;
+                    int y = 10;
+
+                    foreach (int loto in lotoList)
+                    {
+                        string lotoStr = Convert.ToString(loto);
+                        
+                        gfx.DrawString(
+                        lotoStr, font, XBrushes.DodgerBlue,
+                        new XRect(x, y, page.Width, page.Height),
+                        XStringFormats.TopCenter);
+                        y += 40;
+                    }
+
+                    document.Save("D:\\BEKEND\\PONAVLJANJE\\LOTO.pdf");
+                    Console.WriteLine("\nPDF je kreiran!");
+                    goto izbornik;
+///////////////////////////////////////////////////////////////////////////////////////////
 
                 default: Console.WriteLine("Nije unesen dobar broj:\n");
                     goto izbornik;
