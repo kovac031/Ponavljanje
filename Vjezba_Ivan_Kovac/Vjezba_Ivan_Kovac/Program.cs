@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,11 @@ namespace Vjezba_Ivan_Kovac
 {
     internal class Program
     {
+        static void Loto() 
+        {
+        
+        
+        }
         static void Main(string[] args)
         {
             string[] mainIzbornik = { "1. PARNOST", "2. KVADRATNA", "3. PROSJEK", "4. ZNAMENKE", "5. LOTO", "6. LISTIC", "7. OSOBA", "8. PDF", "\n" };
@@ -33,46 +39,35 @@ namespace Vjezba_Ivan_Kovac
                     goto izbornik;
 ///////////////////////////////////////////////////////////////////////////////////////////////
                 case "2":
+                    opet:
                     Console.WriteLine("Unesi tri broja a, b, c kao parametre kvadratne jednadzbe:\n");
                     
-                    double a, b, c;
-                    double disc, deno, x1, x2;
-                    
-                    a = Convert.ToDouble(Console.ReadLine());
-                    b = Convert.ToDouble(Console.ReadLine());
-                    c = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine("\nUnesi a:");
+                    string aStr = Console.ReadLine();
+                    double a = Double.Parse(aStr);
 
-                    if (a == 0)
+                    Console.WriteLine("\nUnesi b:");
+                    string bStr = Console.ReadLine();
+                    double b = Double.Parse(bStr);
+
+                    Console.WriteLine("\nUnesi c:");
+                    string cStr = Console.ReadLine();
+                    double c = Double.Parse(cStr);
+
+                    var check = b * b - 4 * a * c;
+
+                    if(check>0)
                     {
-                        x1 = -c / b;
-                        Console.WriteLine("The roots are Linear:", x1);
+                        double x1 = (-b + Math.Sqrt(check)) / 2 * a;
+                        double x2 = (-b - Math.Sqrt(check)) / 2 * a;
+                        Console.WriteLine($"\nRjesenja su {x1} i {x2}\n");
                     }
                     else
                     {
-                        disc = (b * b) - (4 * a * c);
-                        deno = 2 * a;
-                        if (disc > 0)
-                        {
-                            Console.WriteLine("THE ROOTS ARE REAL AND DISTINCT ROOTS");
-                            x1 = (-b / deno) + (Math.Sqrt(disc) / deno);
-                            x2 = (-b / deno) - (Math.Sqrt(disc) / deno);
-                            Console.WriteLine("THE ROOTS ARE... " + x1 + " and " + x2);
-                        }
-                        else if (disc == 0)
-                        {
-                            Console.WriteLine("THE ROOTS ARE REPEATED ROOTS");
-                            x1 = -b / deno;
-                            Console.WriteLine("THE ROOT IS...: " + x1);
-                        }
-                        else
-                        {
-                            Console.WriteLine("THE ROOTS ARE IMAGINARY ROOTS\n");
-                            x1 = -b / deno;
-                            x2 = ((Math.Sqrt((4 * a * c) - (b * b))) / deno);
-                            Console.WriteLine("THE ROOT 1: " + x1 + "+i" + x2);
-                            Console.WriteLine("THE ROOT 2:" + x1 + "-i" + x2);
-                        }
+                        Console.WriteLine("S ovim brojevima će ispod korijena biti gadno. Daj neke druge brojeve.\n");
+                        goto opet;
                     }
+
                     goto izbornik;
 //////////////////////////////////////////////////////////////////////////////////////////////
                 case "3":
@@ -118,7 +113,13 @@ namespace Vjezba_Ivan_Kovac
                     }
                     Console.WriteLine($"Zbroj svih zadnjih znamenki je: {zbroj}!\n");
                     goto izbornik;
-/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+                case "5":
+                    
+
+
+
+
 
                 default: Console.WriteLine("Nije unesen dobar broj:\n");
                     goto izbornik;
