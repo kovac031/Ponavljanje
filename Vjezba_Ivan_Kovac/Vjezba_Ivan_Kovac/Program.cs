@@ -11,8 +11,23 @@ namespace Vjezba_Ivan_Kovac
     {
         static void Loto() 
         {
-        
-        
+            Random random = new Random();
+            List<int> lotoList = new List<int>();
+            int i = 0;
+            while (i<7)
+            {
+                int loto = random.Next(1, 45);
+
+                if (!lotoList.Contains(loto))
+                {
+                    lotoList.Add(loto);
+                    i++;
+                }
+            }
+            foreach (int loto in lotoList)
+            {
+                Console.WriteLine(loto);
+            }
         }
         static void Main(string[] args)
         {
@@ -115,10 +130,14 @@ namespace Vjezba_Ivan_Kovac
                     goto izbornik;
 /////////////////////////////////////////////////////////////////////////////////////////////
                 case "5":
-                    
+                    Console.WriteLine("Odabrali ste LOTO! Sedam nasumičnih brojeva između 1 i 45 su:\n");
 
+                    Loto();
 
+                    goto izbornik;
 
+                ////////////////////////////////////////////////////////////////////////////////////////////
+                case "6":
 
 
                 default: Console.WriteLine("Nije unesen dobar broj:\n");
