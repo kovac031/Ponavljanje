@@ -10,9 +10,9 @@ namespace Vjezba_Ivan_Kovac
     {
         static void Main(string[] args)
         {
-            string[] mainIzbornik = { "1. PARNOST", "2. KVADRATNA", "3. PROSJEK", "4. ZNAMENKE", "5. LOTO", "6. LISTIC", "7. OSOBA", "8. PDF" };
+            string[] mainIzbornik = { "1. PARNOST", "2. KVADRATNA", "3. PROSJEK", "4. ZNAMENKE", "5. LOTO", "6. LISTIC", "7. OSOBA", "8. PDF", "\n" };
             izbornik:
-            Console.WriteLine("Odaberite jednu opciju:\n");
+            Console.WriteLine("\nOdaberite jednu opciju:\n");
             int i = 0;
             do
             {
@@ -34,48 +34,75 @@ namespace Vjezba_Ivan_Kovac
 
                 case "2":
                     Console.WriteLine("Unesi tri broja a, b, c kao parametre kvadratne jednadzbe:\n");
-                    Console.WriteLine("Unesi a:");
-                    string a = Console.ReadLine();
-                    Console.WriteLine("Unesi b:");
-                    string b = Console.ReadLine();
-                    Console.WriteLine("Unesi c:");
-                    string c = Console.ReadLine();
+                    
+                    double a, b, c;
+                    double disc, deno, x1, x2;
+                    
+                    a = Convert.ToDouble(Console.ReadLine());
+                    b = Convert.ToDouble(Console.ReadLine());
+                    c = Convert.ToDouble(Console.ReadLine());
 
-                    int aa = Int32.Parse(a);
-                    int bb = Int32.Parse(b);
-                    int cc = Int32.Parse(c);
-
-                    var sqrt = Math.Sqrt(bb * bb - 4 * aa * cc);
-                    var x1 = (-bb + sqrt) / (2 * aa);
-                    var x2 = (-bb - sqrt) / (2 * aa);
-
-                    Console.WriteLine($"Rjesenja su {x1} i {x2}");
+                    if (a == 0)
+                    {
+                        x1 = -c / b;
+                        Console.WriteLine("The roots are Linear:", x1);
+                    }
+                    else
+                    {
+                        disc = (b * b) - (4 * a * c);
+                        deno = 2 * a;
+                        if (disc > 0)
+                        {
+                            Console.WriteLine("THE ROOTS ARE REAL AND DISTINCT ROOTS");
+                            x1 = (-b / deno) + (Math.Sqrt(disc) / deno);
+                            x2 = (-b / deno) - (Math.Sqrt(disc) / deno);
+                            Console.WriteLine("THE ROOTS ARE... " + x1 + " and " + x2);
+                        }
+                        else if (disc == 0)
+                        {
+                            Console.WriteLine("THE ROOTS ARE REPEATED ROOTS");
+                            x1 = -b / deno;
+                            Console.WriteLine("THE ROOT IS...: " + x1);
+                        }
+                        else
+                        {
+                            Console.WriteLine("THE ROOTS ARE IMAGINARY ROOTS\n");
+                            x1 = -b / deno;
+                            x2 = ((Math.Sqrt((4 * a * c) - (b * b))) / deno);
+                            Console.WriteLine("THE ROOT 1: " + x1 + "+i" + x2);
+                            Console.WriteLine("THE ROOT 2:" + x1 + "-i" + x2);
+                        }
+                    }
                     goto izbornik;
 
                 case "3":
                     Console.WriteLine("Unosite ocjene jednu po jednu za izračun prosjeka. Unosom nule se završi unos.\n");
                     List<int> unosOcjena = new List<int>();
 
-                    string ocjenaStr = Console.ReadLine();
-                    int ocjenaInt = Int32.Parse(ocjenaStr);
                     do
                     {
+                        string ocjenaStr = Console.ReadLine();
+                        int ocjenaInt = Int32.Parse(ocjenaStr);
                         if (ocjenaInt != 0 && ocjenaInt <= 5 && ocjenaInt % 1 == 0)
                         {
                             unosOcjena.Add(ocjenaInt);
+                        }
+                        else if (ocjenaInt == 0)
+                        {
+                            break;
                         }
                         else
                         {
                             Console.WriteLine("To nije ocjena. Probaj drugi broj:\n");
                         }
-                    }
-                    while (ocjenaStr != "0");
+                    }while (true);
                     double prosjek = unosOcjena.Average();
-                    Console.WriteLine($"Procjek unesenih ocjena je {prosjek}\n");
+                    string decimala = String.Format("{0:0.00}", prosjek);
+                    Console.WriteLine($"Prosjek unesenih ocjena je {decimala}\n");
                     goto izbornik;
 
                 default: Console.WriteLine("Nije unesen dobar broj:\n");
-                    break;
+                    goto izbornik;
             }
 
 
