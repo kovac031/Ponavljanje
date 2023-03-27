@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -136,9 +137,50 @@ namespace Vjezba_Ivan_Kovac
 
                     goto izbornik;
 
-                ////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
                 case "6":
+                    try
+                    {
+                        string directoryPath = "D:\\BEKEND\\PONAVLJANJE";
 
+                        if (!Directory.Exists(directoryPath)) 
+                        {
+                            Directory.CreateDirectory(directoryPath);
+                        }
+
+                        string filePath = "D:\\BEKEND\\PONAVLJANJE\\LISTIC.txt";
+
+                        if (!File.Exists(filePath))
+                        {
+                            FileStream stream = File.Create(filePath);
+                            stream.Flush();
+                            stream.Close();
+                        }
+
+                        File.WriteAllText(filePath, "Loto Listic\n");
+
+                        int r = 0;
+                        int br = 1;
+                        while (r < 7)
+                        {
+                            int s = 0;
+                            while (s < 7)
+                            {
+                                File.AppendAllText(filePath, $"{br}\t");
+                                s++;
+                                br++;
+                            }
+                            File.AppendAllText(filePath, "\n");
+                            r++;                            
+                        }
+                        Console.WriteLine("\nLoto listic je kreiran.");
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine (ex);
+                    }
+                    goto izbornik;
 
                 default: Console.WriteLine("Nije unesen dobar broj:\n");
                     goto izbornik;
